@@ -25,7 +25,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	rect(Vec2(200.0f,200.0f),Vec2(300.0f,400.0f))
 {
 }
 
@@ -43,4 +44,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	gfx.Rectangle(rect, Colors::Blue);
 }
