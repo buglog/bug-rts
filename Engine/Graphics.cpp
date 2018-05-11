@@ -326,53 +326,44 @@ void Graphics::Rectangle(const RectF & rect, Color c)
 		}
 	}
 }
-
-void Graphics::Rectangle(const RectF & rect, Color c, bool gradient)
+// vertical gradient rectangle()
+void Graphics::Rectangle(const RectF& rect, const Color& c0, const Color& c1)
 {
-	int r = c.GetR();
-	int g = c.GetG();
-	int b = c.GetB();
+	// int is used to draw, float is used to store increments
+	int r = c0.GetR();
+	int g = c0.GetG();
+	int b = c0.GetB();
+	float rF = float(r);
+	float gF = float(g);
+	float bF = float(b);
+	// find color difference
+	float range_r = float( c1.GetR() - c0.GetR() );
+	float range_g = float( c1.GetG() - c0.GetG() );
+	float range_b = float( c1.GetB() - c0.GetB() );
+	// define increments for each channel
+	float r_incr = range_r / (float)rect.height;
+	float g_incr = range_g / (float)rect.height;
+	float b_incr = range_b / (float)rect.height;
+	// draw rectangle
 	for (int y = int(rect.top); y < int(rect.bottom); ++y)
 	{
-		// THIS CODE HAS ISSUES! fix em. i think its reverting it to blue for one pixel because it increments by 2 so you are skipping over one or something.
-		// increment colors if they aren't white already
-		if (gradient)
-		{
-			if (r < 255)
-			{
-				r += 2;
-			}
-			else
-			{
-				r = 255;
-			}
-			if (g < 255)
-			{
-				g += 2;
-			}
-			else
-			{
-				g = 255;
-			}
-			if (b < 255)
-			{
-				b += 2;
-			}
-			else
-			{
-				b = 255;
-			}
-		}
+		rF += r_incr;
+		gF += g_incr;
+		bF += b_incr;
+		r = int(rF);
+		g = int(gF);
+		b = int(bF);
 		for (int x = int(rect.left); x<int(rect.right); ++x)
 		{
-			c.SetR(r);
-			c.SetG(g);
-			c.SetB(b);
-			PutPixel(x, y, c);
+			assert(r >= 0 && r <= 255);
+			assert(g >= 0 && g <= 255);
+			assert(b >= 0 && b <= 255);
+			PutPixel(x,y,r,g,b);
 		}
 	}
+	// just a small note - 
+	// this is the best code I have ever written hands down lmao eat shit foolz
 }
-
 
 //////////////////////////////////////////////////
 //           Graphics Exception
