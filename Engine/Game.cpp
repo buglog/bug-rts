@@ -44,5 +44,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	gfx.Rectangle(rect, Colors::Blue);
+	gfx.Rectangle(rect, Colors::Blue,true);
 }

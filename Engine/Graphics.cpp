@@ -327,6 +327,52 @@ void Graphics::Rectangle(const RectF & rect, Color c)
 	}
 }
 
+void Graphics::Rectangle(const RectF & rect, Color c, bool gradient)
+{
+	int r = c.GetR();
+	int g = c.GetG();
+	int b = c.GetB();
+	for (int y = int(rect.top); y < int(rect.bottom); ++y)
+	{
+		// THIS CODE HAS ISSUES! fix em. i think its reverting it to blue for one pixel because it increments by 2 so you are skipping over one or something.
+		// increment colors if they aren't white already
+		if (gradient)
+		{
+			if (r < 255)
+			{
+				r += 2;
+			}
+			else
+			{
+				r = 255;
+			}
+			if (g < 255)
+			{
+				g += 2;
+			}
+			else
+			{
+				g = 255;
+			}
+			if (b < 255)
+			{
+				b += 2;
+			}
+			else
+			{
+				b = 255;
+			}
+		}
+		for (int x = int(rect.left); x<int(rect.right); ++x)
+		{
+			c.SetR(r);
+			c.SetG(g);
+			c.SetB(b);
+			PutPixel(x, y, c);
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception
