@@ -7,7 +7,8 @@ public:
 	RectF() = default;
 	RectF(const Vec2& setTopLeft, const Vec2& setBottomRight);
 	RectF(const Vec2& setTopLeft, const float setWidth, const float setHeight);
-	static RectF fromCenter(const Vec2& center, const float halfWidth, const float halfHeight);
+	static RectF FromCenter(const Vec2& center, const float halfWidth, const float halfHeight);
+	static Vec2 GetCenter(const RectF& rect);
 public:
 	Vec2 topLeft;
 	Vec2 bottomRight;
