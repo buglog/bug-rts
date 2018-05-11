@@ -407,7 +407,7 @@ void Graphics::Rectangle(const RectF& rect, const Color& c0, const Color& c1)
 		}
 	}
 	// just a small note - 
-	// this is the best code I have ever written hands down lmao eat shit foolz
+	// this is the cleanest code I have ever written hands down lmao eat shit foolz
 }
 
 void Graphics::RectBorder(const RectF & rect, const Color & c, const int& spacing)

@@ -24,6 +24,8 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "RectF.h"
+#include "Vec2.h"
+#include "Board.h"
 
 class Game
 {
@@ -37,6 +39,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+	void ClampToScreen(Vec2& v);
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -45,5 +48,6 @@ private:
 	/*  User Variables              */
 	float x = 687.6f;
 	float y = 440.2f;
+	Board::Tile tile;
 	/********************************/
 };

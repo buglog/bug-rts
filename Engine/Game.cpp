@@ -20,12 +20,12 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
-#include "Vec2.h"
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	tile(Vec2(100.0f,100.0f))
 {
 }
 
@@ -39,20 +39,42 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (wnd.kbd.KeyIsPressed('W'))
-	{
-		y -= 3.0f;
-	}
-	if (wnd.kbd.KeyIsPressed('S'))
-	{
-		y += 3.0f;
-	}
+	Vec2 buttz;
+
+	buttz = tile.GetCenter();
+
+	buttz += Vec2(1.0f, 1.0f);
 }
 
 void Game::ComposeFrame()
 {
-	RectF rect(Vec2(100.0f, 40.0f), Vec2(120.0f, 568.0f));
+	/*
+	Vec2 pos = Vec2(x, y);
+	ClampToScreen(pos);
+	RectF rect(Vec2(100.0f, 40.0f), Vec2(120.0f, 568.0f)); 
 	gfx.Rectangle(rect, Colors::Yellow, Colors::Cyan);
 	gfx.RectBorder(rect, Colors::Magenta);
-	gfx.Line(Vec2(123.0f,387.1f), Vec2(x,y), Colors::Red);
+	gfx.Line(Vec2(123.0f,387.1f), pos, Colors::Red);
+	*/
+	tile.Draw(gfx);
+}
+
+void Game::ClampToScreen(Vec2 & v)
+{
+	if (v.x < 0.0f)
+	{
+		v.x = 0.0f;
+	}
+	if (v.x > (float)Graphics::ScreenWidth)
+	{
+		v.x = (float)Graphics::ScreenWidth - 1.0f;
+	}
+	if (v.y < 0.0f)
+	{
+		v.y = 0.0f;
+	}
+	if (v.y >(float)Graphics::ScreenHeight)
+	{
+		v.y = (float)Graphics::ScreenHeight - 1.0f;
+	}
 }
