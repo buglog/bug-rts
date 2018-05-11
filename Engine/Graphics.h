@@ -58,6 +58,7 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+	void Line(Vec2& v0, Vec2& v1, Color c);
 	void Rectangle(const RectF& rect, Color c);
 	// gradient rectangle (vertical) :->
 	void Rectangle(const RectF& rect, const Color& c0, const Color& c1);

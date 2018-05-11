@@ -316,6 +316,51 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+void Graphics::Line(Vec2 & v0, Vec2 & v1, Color c)
+{
+	// Bresenham's line algorithm (thanks rosettacode)
+	const bool steep = (fabs(v1.y - v0.y) > fabs(v1.x - v0.x));
+	if (steep)
+	{
+		std::swap(v0.x, v0.y);
+		std::swap(v1.x, v1.y);
+	}
+
+	if (v0.x > v1.x)
+	{
+		std::swap(v0.x, v1.x);
+		std::swap(v0.y, v1.y);
+	}
+
+	const float dx = v1.x - v0.x;
+	const float dy = fabs(v1.y - v0.y);
+
+	float error = dx / 2.0f;
+	const int ystep = (v0.y < v1.y) ? 1 : -1;
+	int y = (int)v0.y;
+
+	const int maxX = (int)v1.x;
+
+	for (int x = (int)v0.x; x<maxX; x++)
+	{
+		if (steep)
+		{
+			PutPixel(y, x, c);
+		}
+		else
+		{
+			PutPixel(x, y, c);
+		}
+
+		error -= dy;
+		if (error < 0)
+		{
+			y += ystep;
+			error += dx;
+		}
+	}
+}
+
 void Graphics::Rectangle(const RectF & rect, Color c)
 {
 	for (int y = int(rect.top); y < int(rect.bottom); ++y)

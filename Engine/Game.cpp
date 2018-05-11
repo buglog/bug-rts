@@ -39,6 +39,14 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if (wnd.kbd.KeyIsPressed('W'))
+	{
+		y -= 3.0f;
+	}
+	if (wnd.kbd.KeyIsPressed('S'))
+	{
+		y += 3.0f;
+	}
 }
 
 void Game::ComposeFrame()
@@ -46,4 +54,5 @@ void Game::ComposeFrame()
 	RectF rect(Vec2(100.0f, 40.0f), Vec2(120.0f, 568.0f));
 	gfx.Rectangle(rect, Colors::Yellow, Colors::Cyan);
 	gfx.RectBorder(rect, Colors::Magenta);
+	gfx.Line(Vec2(123.0f,387.1f), Vec2(x,y), Colors::Red);
 }
