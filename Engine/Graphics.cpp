@@ -341,9 +341,9 @@ void Graphics::Rectangle(const RectF& rect, const Color& c0, const Color& c1)
 	float range_g = float( c1.GetG() - c0.GetG() );
 	float range_b = float( c1.GetB() - c0.GetB() );
 	// define increments for each channel
-	float r_incr = range_r / (float)rect.height;
-	float g_incr = range_g / (float)rect.height;
-	float b_incr = range_b / (float)rect.height;
+	float r_incr = range_r / rect.height;
+	float g_incr = range_g / rect.height;
+	float b_incr = range_b / rect.height;
 	// draw rectangle
 	for (int y = int(rect.top); y < int(rect.bottom); ++y)
 	{
@@ -353,16 +353,51 @@ void Graphics::Rectangle(const RectF& rect, const Color& c0, const Color& c1)
 		r = int(rF);
 		g = int(gF);
 		b = int(bF);
-		for (int x = int(rect.left); x<int(rect.right); ++x)
+		for (int x = int(rect.left); x < int(rect.right); ++x)
 		{
 			assert(r >= 0 && r <= 255);
 			assert(g >= 0 && g <= 255);
 			assert(b >= 0 && b <= 255);
-			PutPixel(x,y,r,g,b);
+			PutPixel(x, y, r, g, b);
 		}
 	}
 	// just a small note - 
 	// this is the best code I have ever written hands down lmao eat shit foolz
+}
+
+void Graphics::RectBorder(const RectF & rect, const Color & c, const int& spacing)
+{
+	assert(spacing > 0);
+	// convert once, not each time :^)
+	int top = (int)rect.top;
+	int bottom = (int)rect.bottom;
+	int left = (int)rect.left;
+	int right = (int)rect.right;
+	// enlarge... my border.
+	// top
+	for (int x = left; x < right; x += spacing)
+	{
+		int y = top;
+		PutPixel(x, y, c);
+	}
+	// bottom
+	for (int x = left; x < right; x += spacing)
+	{
+		int y = bottom;
+		PutPixel(x, y, c);
+	}
+	// left
+	for (int y = top; y < bottom; y += spacing)
+	{
+		int x = left;
+		PutPixel(x, y, c);
+	}
+	// right
+	for (int y = top; y < bottom; y += spacing)
+	{
+		int x = right;
+		PutPixel(x, y, c);
+	}
 }
 
 //////////////////////////////////////////////////

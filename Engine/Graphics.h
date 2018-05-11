@@ -59,8 +59,13 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void Rectangle(const RectF& rect, Color c);
-	// gradient (vertical)
+	// gradient rectangle (vertical) :->
 	void Rectangle(const RectF& rect, const Color& c0, const Color& c1);
+	void RectBorder(const RectF& rect, const Color& c)
+	{
+		RectBorder(rect, c, 1);
+	}
+	void RectBorder(const RectF& rect, const Color& c, const int& spacing);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

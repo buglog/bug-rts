@@ -43,6 +43,5 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	RectF rect;
 	/********************************/
 };
