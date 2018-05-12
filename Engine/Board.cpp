@@ -1,12 +1,12 @@
 #include "Board.h"
 
 Board::Frame::Frame(const Vec2 & in_topLeft, const Vec2 & in_bottomRight)
-	:
-	topLeft(in_topLeft),
-	bottomRight(in_bottomRight)
 {
+	topLeft = in_topLeft;
+	bottomRight = in_bottomRight;
 	width = bottomRight.x - topLeft.x;
 	height = bottomRight.y - topLeft.y;
+	rect = RectF(topLeft, bottomRight);
 }
 
 void Board::Frame::Draw(Graphics & gfx)
@@ -133,7 +133,7 @@ void Board::Draw(Graphics & gfx)
 	frame.Draw(gfx);
 	for (Tile& t : tiles)
 	{
-		// if(t.IsInFrame(frame))
+		if(t.IsInFrame(frame))
 			t.Draw(gfx);
 	}
 }
