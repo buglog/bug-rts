@@ -19,7 +19,7 @@ Board::Tile::Tile(const Vec2 & in_topLeft)
 
 void Board::Tile::Draw(Graphics & gfx)
 {
-	DrawRect(gfx);
+	// DrawRect(gfx);
 	DrawTile(gfx);
 }
 
@@ -35,6 +35,10 @@ void Board::Tile::DrawRect(Graphics & gfx)
 
 void Board::Tile::DrawTile(Graphics & gfx)
 {
+	gfx.PutPixel(left,  c_tile);
+	gfx.PutPixel(right, c_tile);
+	gfx.PutPixel(top,   c_tile);
+	gfx.PutPixel(bottom,c_tile);
 	gfx.Line(left, top    , c_tile);
 	gfx.Line(top, right   , c_tile);
 	gfx.Line(bottom, right, c_tile);

@@ -57,6 +57,10 @@ public:
 	{
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
+	void PutPixel(Vec2 v, Color c)
+	{
+		PutPixel(int(v.x), int(v.y), c);
+	}
 	void PutPixel( int x,int y,Color c );
 	void Line(Vec2& v0, Vec2& v1, Color c);
 	void Rectangle(const RectF& rect, Color c);
