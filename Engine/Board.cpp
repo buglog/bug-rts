@@ -1,41 +1,22 @@
 #include "Board.h"
 
-Board::Board(const Vec2& in_topLeft,const Vec2& in_bottomRight)
+Board::Frame::Frame(const Vec2 & in_topLeft, const Vec2 & in_bottomRight)
 	:
 	topLeft(in_topLeft),
-	bottomRight(in_bottomRight),
-	frame(topLeft,bottomRight)
+	bottomRight(in_bottomRight)
 {
-	int i = 0;
-	for (int y = 0; y < dimY; ++y)
-	{
-		for (int x = 0; x < dimX; ++x)
-		{
-			Vec2 pos = Vec2(topLeft.x + x * tileWidth / 2.0f, topLeft.y + y * tileHeight);
-			// if column is uneven, offset.
-			if ((x % 2) > 0)
-				pos.y += tileHeight / 2.0f;
-
-			tiles[i].Init( pos );
-			++i;
-		}
-	}
+	width = bottomRight.x - topLeft.x;
+	height = bottomRight.y - topLeft.y;
 }
 
-void Board::Draw(Graphics & gfx)
+void Board::Frame::Draw(Graphics & gfx)
 {
-	for (Tile& t : tiles)
-	{
-		t.Draw(gfx);
-	}
+	gfx.RectBorder(rect, c);
 }
 
-void Board::ProcessTiles(const Mouse & mouse)
+RectF Board::Frame::GetRect()
 {
-	for (Tile& t : tiles)
-	{
-		t.ProcessMouse(mouse);
-	}
+	return rect;
 }
 
 void Board::Tile::Init(const Vec2 & in_topLeft)
@@ -112,11 +93,83 @@ bool Board::Tile::MouseIsOver(const Mouse & mouse)
 	return false;
 }
 
-Board::Frame::Frame(const Vec2 & in_topLeft, const Vec2 & in_bottomRight)
+bool Board::Tile::IsInFrame(Frame& frame)
+{
+	if (left.x >= frame.GetRect().left &&
+		right.x < frame.GetRect().right &&
+		top.y >= frame.GetRect().top &&
+		bottom.y < frame.GetRect().bottom)
+		return true;
+	else
+		return false;
+}
+
+Board::Board(const Vec2& in_topLeft, const Vec2& in_bottomRight)
 	:
+	offset(in_topLeft),
 	topLeft(in_topLeft),
 	bottomRight(in_bottomRight)
 {
-	width = bottomRight.x - topLeft.x;
-	height = bottomRight.y - topLeft.y;
+	frame = Frame(topLeft, bottomRight);
+	// tile placing code!
+	int i = 0;
+	for (int y = 0; y < dimY; ++y)
+	{
+		for (int x = 0; x < dimX; ++x)
+		{
+			Vec2 pos = Vec2(offset.x + x * tileWidth / 2.0f, offset.y + y * tileHeight);
+			// if column is uneven, offset by half height.
+			if ((x % 2) > 0)
+				pos.y += tileHeight / 2.0f;
+
+			tiles[i].Init(pos);
+			++i;
+		}
+	}
+}
+
+void Board::Draw(Graphics & gfx)
+{
+	frame.Draw(gfx);
+	for (Tile& t : tiles)
+	{
+		// if(t.IsInFrame(frame))
+			t.Draw(gfx);
+	}
+}
+
+void Board::ProcessOffset(Keyboard & kbd)
+{
+	// keyboard controls-- supposed to move map around but not working lmao
+	if (kbd.KeyIsPressed(VK_UP) || kbd.KeyIsPressed('W'))
+		offset.y -= speed;
+	if (kbd.KeyIsPressed(VK_DOWN) || kbd.KeyIsPressed('S'))
+		offset.y += speed;
+	if (kbd.KeyIsPressed(VK_LEFT) || kbd.KeyIsPressed('A'))
+		offset.x -= speed;
+	if (kbd.KeyIsPressed(VK_RIGHT) || kbd.KeyIsPressed('D'))
+		offset.x += speed;
+
+	// tile placing code, yet again. except 60x per second
+	int i = 0;
+	for (int y = 0; y < dimY; ++y)
+	{
+		for (int x = 0; x < dimX; ++x)
+		{
+			Vec2 pos = Vec2(offset.x + x * tileWidth / 2.0f, offset.y + y * tileHeight);
+			if ((x % 2) > 0)
+				pos.y += tileHeight / 2.0f;
+
+			tiles[i].Init(pos);
+			++i;
+		}
+	}
+}
+
+void Board::ProcessTiles(const Mouse & mouse)
+{
+	for (Tile& t : tiles)
+	{
+		t.ProcessMouse(mouse);
+	}
 }
