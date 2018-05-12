@@ -16,7 +16,7 @@ public: // once you're done with the tile class, make it private. Encapsulate yo
 		void Draw(Graphics& gfx);
 		RectF GetRect();
 	private:
-		Color c = Colors::Red;
+		Color c = Colors::LightGray;
 		Vec2 topLeft;
 		Vec2 bottomRight;
 		float width;
@@ -59,10 +59,10 @@ private:
 	float speed = 10.0f;
 	Vec2 topLeft;
 	Vec2 bottomRight;
-	static constexpr int dimX = 5;
-	static constexpr int dimY = 5;
+	static constexpr int dimX = 10;
+	static constexpr int dimY = 10;
 	// width and height refer to the diamond shape, not the rect. Rect is half the width, so right now it's A Square.
-	static constexpr float tileWidth = 100;
-	static constexpr float tileHeight = 50;
+	static constexpr float tileWidth = 100.0f;
+	static constexpr float tileHeight = 30.0f;
 	Tile tiles[dimX * dimY];
 };

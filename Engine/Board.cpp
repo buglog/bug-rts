@@ -130,12 +130,13 @@ Board::Board(const Vec2& in_topLeft, const Vec2& in_bottomRight)
 
 void Board::Draw(Graphics & gfx)
  {
-	frame.Draw(gfx);
 	for (Tile& t : tiles)
 	{
 		// if(t.IsInFrame(frame))
 			t.Draw(gfx,frame.GetRect());
 	}
+	frame.Draw(gfx);
+	gfx.RectBorder(RectF(frame.GetRect().left + 1.0f, frame.GetRect().right - 1.0f, frame.GetRect().top + 1.0f, frame.GetRect().bottom - 1.0f ), Colors::Blue);
 }
 
 void Board::ProcessOffset(Keyboard & kbd)
