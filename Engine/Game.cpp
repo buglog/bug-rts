@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	tile(Vec2(100.0f,100.0f))
+	tile(Vec2(400.0f,100.0f))
 {
 }
 
@@ -48,14 +48,9 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	/*
-	Vec2 pos = Vec2(x, y);
-	ClampToScreen(pos);
 	RectF rect(Vec2(100.0f, 40.0f), Vec2(120.0f, 568.0f)); 
 	gfx.Rectangle(rect, Colors::Yellow, Colors::Cyan);
-	gfx.RectBorder(rect, Colors::Magenta);
-	gfx.Line(Vec2(123.0f,387.1f), pos, Colors::Red);
-	*/
+
 	tile.Draw(gfx);
 }
 
