@@ -56,7 +56,7 @@ public:
 private:
 	Frame frame;
 	Vec2 offset;
-	float speed = 5.0f;
+	float speed = 10.0f;
 	Vec2 topLeft;
 	Vec2 bottomRight;
 	static constexpr int dimX = 5;

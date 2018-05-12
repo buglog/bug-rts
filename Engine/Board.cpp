@@ -129,7 +129,7 @@ Board::Board(const Vec2& in_topLeft, const Vec2& in_bottomRight)
 }
 
 void Board::Draw(Graphics & gfx)
-{
+ {
 	frame.Draw(gfx);
 	for (Tile& t : tiles)
 	{
