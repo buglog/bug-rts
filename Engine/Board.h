@@ -29,13 +29,13 @@ private:
 	public:
 		Tile() = default;
 		void Init(const Vec2& in_topLeft);
-		void Draw(Graphics& gfx);
+		void Draw(Graphics& gfx, const RectF& clamp);
 		Vec2 GetCenter();
 		void ProcessMouse(const Mouse& mouse);
 		bool IsInFrame(Frame& frame);
 	private:
-		void DrawRect(Graphics& gfx);
-		void DrawTile(Graphics& gfx);
+		void DrawRect(Graphics& gfx, const RectF& clamp);
+		void DrawTile(Graphics& gfx, const RectF& clamp);
 		bool MouseIsOver(const Mouse& mouse);
 	private:
 		RectF rect;

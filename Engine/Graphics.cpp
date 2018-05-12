@@ -361,6 +361,50 @@ void Graphics::Line(Vec2 & v0, Vec2 & v1, Color c)
 	}
 }
 
+void Graphics::LineClamp(Vec2 & v0, Vec2 & v1, Color c, const RectF & rect)
+{
+	const bool steep = (fabs(v1.y - v0.y) > fabs(v1.x - v0.x));
+	if (steep)
+	{
+		std::swap(v0.x, v0.y);
+		std::swap(v1.x, v1.y);
+	}
+
+	if (v0.x > v1.x)
+	{
+		std::swap(v0.x, v1.x);
+		std::swap(v0.y, v1.y);
+	}
+
+	const float dx = v1.x - v0.x;
+	const float dy = fabs(v1.y - v0.y);
+
+	float error = dx / 2.0f;
+	const int ystep = (v0.y < v1.y) ? 1 : -1;
+	int y = (int)v0.y;
+
+	const int maxX = (int)v1.x;
+
+	for (int x = (int)v0.x; x<maxX; x++)
+	{
+		if (steep)
+		{
+			PutPixelClamp(y, x, c, rect);
+		}
+		else
+		{
+			PutPixelClamp(x, y, c, rect);
+		}
+
+		error -= dy;
+		if (error < 0)
+		{
+			y += ystep;
+			error += dx;
+		}
+	}
+}
+
 void Graphics::Rectangle(const RectF & rect, Color c)
 {
 	for (int y = int(rect.top); y < int(rect.bottom); ++y)
@@ -408,6 +452,41 @@ void Graphics::Rectangle(const RectF& rect, const Color& c0, const Color& c1)
 	}
 	// just a small note - 
 	// this is the cleanest code I have ever written hands down lmao eat shit foolz
+}
+
+void Graphics::RectBorderClamp(const RectF & rect, const Color & c, const RectF & clamp)
+{
+	int spacing = 1;
+	// convert once, not each time :^)
+	int top = (int)rect.top;
+	int bottom = (int)rect.bottom;
+	int left = (int)rect.left;
+	int right = (int)rect.right;
+	// enlarge... my border.
+	// top
+	for (int x = left; x < right; x += spacing)
+	{
+		int y = top;
+		PutPixelClamp(x, y, c, clamp);
+	}
+	// bottom
+	for (int x = left; x < right; x += spacing)
+	{
+		int y = bottom;
+		PutPixelClamp(x, y, c, clamp);
+	}
+	// left
+	for (int y = top; y < bottom; y += spacing)
+	{
+		int x = left;
+		PutPixelClamp(x, y, c, clamp);
+	}
+	// right
+	for (int y = top; y < bottom; y += spacing)
+	{
+		int x = right;
+		PutPixelClamp(x, y, c, clamp);
+	}
 }
 
 void Graphics::RectBorder(const RectF & rect, const Color & c, const int& spacing)

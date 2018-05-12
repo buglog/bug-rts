@@ -41,10 +41,10 @@ void Board::Tile::Init(const Vec2 & in_topLeft)
 	c_dead.SetB(30);
 }
 
-void Board::Tile::Draw(Graphics & gfx)
+void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
 {
-	DrawRect(gfx);
-	DrawTile(gfx);
+	DrawRect(gfx,clamp);
+	DrawTile(gfx,clamp);
 }
 
 Vec2 Board::Tile::GetCenter()
@@ -64,21 +64,21 @@ void Board::Tile::ProcessMouse(const Mouse & mouse)
 	}
 }
 
-void Board::Tile::DrawRect(Graphics & gfx)
+void Board::Tile::DrawRect(Graphics & gfx, const RectF& clamp )
 {
-	gfx.RectBorder(rect, c_rect);
+	gfx.RectBorderClamp(rect, c_rect, clamp);
 }
 
-void Board::Tile::DrawTile(Graphics & gfx)
+void Board::Tile::DrawTile(Graphics & gfx,const RectF& clamp)
 {
-	gfx.PutPixel(left,  c_diamond);
-	gfx.PutPixel(right, c_diamond);
-	gfx.PutPixel(top,   c_diamond);
-	gfx.PutPixel(bottom,c_diamond);
-	gfx.Line(left, top    , c_diamond);
-	gfx.Line(top, right   , c_diamond);
-	gfx.Line(bottom, right, c_diamond);
-	gfx.Line(left, bottom , c_diamond);
+	gfx.PutPixelClamp(left,  c_diamond,clamp);
+	gfx.PutPixelClamp(right, c_diamond,clamp);
+	gfx.PutPixelClamp(top,   c_diamond,clamp);
+	gfx.PutPixelClamp(bottom,c_diamond,clamp);
+	gfx.LineClamp(left,top,    c_diamond,clamp);
+	gfx.LineClamp(top,right,   c_diamond,clamp);
+	gfx.LineClamp(bottom,right,c_diamond,clamp);
+	gfx.LineClamp(left,bottom, c_diamond,clamp);
 }
 
 bool Board::Tile::MouseIsOver(const Mouse & mouse)
@@ -133,8 +133,8 @@ void Board::Draw(Graphics & gfx)
 	frame.Draw(gfx);
 	for (Tile& t : tiles)
 	{
-		if(t.IsInFrame(frame))
-			t.Draw(gfx);
+		// if(t.IsInFrame(frame))
+			t.Draw(gfx,frame.GetRect());
 	}
 }
 

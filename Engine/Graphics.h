@@ -61,8 +61,25 @@ public:
 	{
 		PutPixel(int(v.x), int(v.y), c);
 	}
+	void PutPixelClamp(Vec2 v, Color c, const RectF& clamp)
+	{
+		if (v.x >= clamp.left &&
+			v.x <= clamp.right &&
+			v.y >= clamp.top &&
+			v.y <= clamp.bottom)
+		PutPixel(int(v.x), int(v.y), c);
+	}
 	void PutPixel( int x,int y,Color c );
+	void PutPixelClamp(int x, int y, Color c, const RectF& rect)
+	{
+		if (x >= rect.left &&
+			x <= rect.right &&
+			y >= rect.top &&
+			y <= rect.bottom)
+			PutPixel(x, y, c);
+	}
 	void Line(Vec2& v0, Vec2& v1, Color c);
+	void LineClamp(Vec2& v0, Vec2& v1, Color c, const RectF& rect);
 	void Rectangle(const RectF& rect, Color c);
 	// gradient rectangle (vertical) :->
 	void Rectangle(const RectF& rect, const Color& c0, const Color& c1);
@@ -70,6 +87,7 @@ public:
 	{
 		RectBorder(rect, c, 1);
 	}
+	void RectBorderClamp(const RectF& rect, const Color& c, const RectF& clamp);
 	void RectBorder(const RectF& rect, const Color& c, const int& spacing);
 	~Graphics();
 private:
