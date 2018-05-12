@@ -48,6 +48,7 @@ private:
 	/*  User Variables              */
 	float x = 687.6f;
 	float y = 440.2f;
+	Board brd;
 	Board::Tile tile;
 	/********************************/
 };

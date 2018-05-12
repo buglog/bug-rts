@@ -1,15 +1,33 @@
 #include "Board.h"
 
-Board::Board(int in_dimX, int in_dimY)
+Board::Board(const Vec2& in_topLeft)
 	:
-	dimX(in_dimX),
-	dimY(in_dimY)
+	topLeft(in_topLeft)
 {
+	int i = 0;
+	for (int y = 0; y < dimY; ++y)
+	{
+		for (int x = 0; x < dimX; ++x)
+		{
+			tiles[i].Init( Vec2(topLeft.x + x * tileWidth / 2.0f, topLeft.y + y * tileHeight) );
+			++i;
+		}
+	}
 }
 
-Board::Tile::Tile(const Vec2 & in_topLeft)
+void Board::Draw(Graphics & gfx)
 {
+	for (Tile& t : tiles)
+	{
+		t.Draw(gfx);
+	}
+}
+
+void Board::Tile::Init(const Vec2 & in_topLeft)
+{
+	// tiles are drawn from top left corner of rect.
 	topLeft = in_topLeft;
+	// corners of diamond are then drawn from the center of the rect.
 	rect = RectF(Vec2(topLeft.x, topLeft.y), Vec2(topLeft.x + tileWidth / 2.0f, topLeft.y + tileHeight));
 	left   = Vec2( GetCenter().x - tileWidth / 2.0f, GetCenter().y );
 	right  = Vec2( GetCenter().x + tileWidth / 2.0f, GetCenter().y );
@@ -19,9 +37,12 @@ Board::Tile::Tile(const Vec2 & in_topLeft)
 	c_rect.SetR(40);
 	c_rect.SetG(40);
 	c_rect.SetB(40);
-	c_diamond.SetR(211);
-	c_diamond.SetR(211);
-	c_diamond.SetR(211);
+	c_lit.SetR(170);
+	c_lit.SetG(211);
+	c_lit.SetB(98);
+	c_dead.SetR(70);
+	c_dead.SetG(70);
+	c_dead.SetB(30);
 }
 
 void Board::Tile::Draw(Graphics & gfx)
@@ -39,11 +60,11 @@ void Board::Tile::ProcessMouse(const Mouse & mouse)
 {
 	if (MouseIsOver(mouse))
 	{
-		c_diamond = Colors::Green;
+		c_diamond = c_lit;
 	}
 	else
 	{
-		c_diamond = Colors::Gray;
+		c_diamond = c_dead; 
 	}
 }
 

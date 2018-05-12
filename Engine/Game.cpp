@@ -25,8 +25,9 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	tile(Vec2(400.0f,100.0f))
+	brd(Vec2(50.0f,50.0f))
 {
+	tile.Init(Vec2(400.0f, 100.0f));
 }
 
 void Game::Go()
@@ -47,6 +48,7 @@ void Game::ComposeFrame()
 	RectF rect(Vec2(100.0f, 40.0f), Vec2(120.0f, 568.0f)); 
 	gfx.Rectangle(rect, Colors::Yellow, Colors::Cyan);
 
+	brd.Draw(gfx);
 	tile.Draw(gfx);
 }
 
