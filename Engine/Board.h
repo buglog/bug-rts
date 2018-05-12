@@ -6,7 +6,18 @@
 
 class Board
 {
-public: // once you're done with the tile class, make it private. Encapsulate your shit dawg
+private: // once you're done with the tile class, make it private. Encapsulate your shit dawg
+	class Frame
+	{
+	public:
+		Frame(const Vec2& in_topLeft, const Vec2& in_bottomRight);
+	private:
+		Vec2 topLeft;
+		Vec2 bottomRight;
+		float width;
+		float height;
+		RectF rect;
+	};
 	class Tile
 	{
 	public:
@@ -36,11 +47,13 @@ public: // once you're done with the tile class, make it private. Encapsulate yo
 		Vec2 right;
 	};
 public:
-	Board(const Vec2& in_topLeft);
+	Board(const Vec2& in_topLeft, const Vec2& in_bottomRight);
 	void Draw(Graphics& gfx);
 	void ProcessTiles(const Mouse& mouse);
-public:
+private:
+	Frame frame;
 	Vec2 topLeft;
+	Vec2 bottomRight;
 	static constexpr int dimX = 5;
 	static constexpr int dimY = 5;
 	// width and height refer to the diamond shape, not the rect. Rect is half the width, so right now it's A Square.

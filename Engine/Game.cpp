@@ -25,9 +25,8 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	brd(Vec2(50.0f,50.0f))
+	brd( Vec2(50.0f,50.0f), Vec2((float)Graphics::ScreenWidth - 50.0f,(float)Graphics::ScreenHeight - 50.0f) )
 {
-	tile.Init(Vec2(400.0f, 100.0f));
 }
 
 void Game::Go()
@@ -40,7 +39,6 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	tile.ProcessMouse(wnd.mouse);
 	brd.ProcessTiles(wnd.mouse);
 }
 
@@ -50,7 +48,6 @@ void Game::ComposeFrame()
 	gfx.Rectangle(rect, Colors::Yellow, Colors::Cyan);
 
 	brd.Draw(gfx);
-	tile.Draw(gfx);
 }
 
 void Game::ClampToScreen(Vec2 & v)

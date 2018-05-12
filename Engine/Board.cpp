@@ -1,8 +1,10 @@
 #include "Board.h"
 
-Board::Board(const Vec2& in_topLeft)
+Board::Board(const Vec2& in_topLeft,const Vec2& in_bottomRight)
 	:
-	topLeft(in_topLeft)
+	topLeft(in_topLeft),
+	bottomRight(in_bottomRight),
+	frame(topLeft,bottomRight)
 {
 	int i = 0;
 	for (int y = 0; y < dimY; ++y)
@@ -108,4 +110,13 @@ bool Board::Tile::MouseIsOver(const Mouse & mouse)
 		return true;
 	}
 	return false;
+}
+
+Board::Frame::Frame(const Vec2 & in_topLeft, const Vec2 & in_bottomRight)
+	:
+	topLeft(in_topLeft),
+	bottomRight(in_bottomRight)
+{
+	width = bottomRight.x - topLeft.x;
+	height = bottomRight.y - topLeft.y;
 }
