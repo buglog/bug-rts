@@ -9,7 +9,12 @@ Board::Board(const Vec2& in_topLeft)
 	{
 		for (int x = 0; x < dimX; ++x)
 		{
-			tiles[i].Init( Vec2(topLeft.x + x * tileWidth / 2.0f, topLeft.y + y * tileHeight) );
+			Vec2 pos = Vec2(topLeft.x + x * tileWidth / 2.0f, topLeft.y + y * tileHeight);
+			// if column is uneven, offset.
+			if ((x % 2) > 0)
+				pos.y += tileHeight / 2.0f;
+
+			tiles[i].Init( pos );
 			++i;
 		}
 	}
@@ -20,6 +25,14 @@ void Board::Draw(Graphics & gfx)
 	for (Tile& t : tiles)
 	{
 		t.Draw(gfx);
+	}
+}
+
+void Board::ProcessTiles(const Mouse & mouse)
+{
+	for (Tile& t : tiles)
+	{
+		t.ProcessMouse(mouse);
 	}
 }
 

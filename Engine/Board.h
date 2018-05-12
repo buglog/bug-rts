@@ -38,6 +38,7 @@ public: // once you're done with the tile class, make it private. Encapsulate yo
 public:
 	Board(const Vec2& in_topLeft);
 	void Draw(Graphics& gfx);
+	void ProcessTiles(const Mouse& mouse);
 public:
 	Vec2 topLeft;
 	static constexpr int dimX = 5;

@@ -41,6 +41,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	tile.ProcessMouse(wnd.mouse);
+	brd.ProcessTiles(wnd.mouse);
 }
 
 void Game::ComposeFrame()
