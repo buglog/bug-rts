@@ -63,6 +63,6 @@ private:
 	static constexpr int dimY = 10;
 	// width and height refer to the diamond shape, not the rect. Rect is half the width, so right now it's A Square.
 	static constexpr float tileWidth = 100.0f;
-	static constexpr float tileHeight = 30.0f;
+	static constexpr float tileHeight = 50.0f;
 	Tile tiles[dimX * dimY];
 };
