@@ -39,11 +39,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	Vec2 buttz;
-
-	buttz = tile.GetCenter();
-
-	buttz += Vec2(1.0f, 1.0f);
+	tile.ProcessMouse(wnd.mouse);
 }
 
 void Game::ComposeFrame()
