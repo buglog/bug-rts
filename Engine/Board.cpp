@@ -19,9 +19,10 @@ RectF Board::Frame::GetRect()
 	return rect;
 }
 
-void Board::Tile::Init(const Vec2 & in_topLeft)
+void Board::Tile::Init(const Vec2 & in_topLeft, const Location& in_loc)
 {
 	// tiles are drawn from top left corner of rect.
+	loc = in_loc;
 	topLeft = in_topLeft;
 	// corners of diamond are then drawn from the center of the rect.
 	rect = RectF(Vec2(topLeft.x, topLeft.y), Vec2(topLeft.x + tileWidth / 2.0f, topLeft.y + tileHeight));
@@ -41,15 +42,20 @@ void Board::Tile::Init(const Vec2 & in_topLeft)
 	c_dead.SetB(30);
 }
 
-void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
+void Board::Tile::Update(const Vec2 & in_topLeft)
 {
-	DrawRect(gfx,clamp);
-	DrawTile(gfx,clamp);
+	topLeft = in_topLeft;
+	rect = RectF(Vec2(topLeft.x, topLeft.y), Vec2(topLeft.x + tileWidth / 2.0f, topLeft.y + tileHeight));
+	left = Vec2(GetCenter().x - tileWidth / 2.0f, GetCenter().y);
+	right = Vec2(GetCenter().x + tileWidth / 2.0f, GetCenter().y);
+	top = Vec2(GetCenter().x, GetCenter().y - tileHeight / 2.0f);
+	bottom = Vec2(GetCenter().x, GetCenter().y + tileHeight / 2.0f);
 }
 
-Vec2 Board::Tile::GetCenter()
+void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
 {
-	return RectF::GetCenter(rect);
+	// DrawRect(gfx,clamp);
+	DrawTile(gfx,clamp);
 }
 
 void Board::Tile::ProcessMouse(const Mouse & mouse)
@@ -62,6 +68,27 @@ void Board::Tile::ProcessMouse(const Mouse & mouse)
 	{
 		c_diamond = c_dead; 
 	}
+}
+
+bool Board::Tile::IsInFrame(Frame& frame)
+{
+	if (left.x >= frame.GetRect().left &&
+		right.x < frame.GetRect().right &&
+		top.y >= frame.GetRect().top &&
+		bottom.y < frame.GetRect().bottom)
+		return true;
+	else
+		return false;
+}
+
+Vec2 Board::Tile::GetCenter()
+{
+	return RectF::GetCenter(rect);
+}
+
+Board::Location Board::Tile::GetLoc()
+{
+	return loc;
 }
 
 void Board::Tile::DrawRect(Graphics & gfx, const RectF& clamp )
@@ -93,17 +120,6 @@ bool Board::Tile::MouseIsOver(const Mouse & mouse)
 	return false;
 }
 
-bool Board::Tile::IsInFrame(Frame& frame)
-{
-	if (left.x >= frame.GetRect().left &&
-		right.x < frame.GetRect().right &&
-		top.y >= frame.GetRect().top &&
-		bottom.y < frame.GetRect().bottom)
-		return true;
-	else
-		return false;
-}
-
 Board::Board(const Vec2& in_topLeft, const Vec2& in_bottomRight)
 	:
 	offset(in_topLeft),
@@ -122,7 +138,7 @@ Board::Board(const Vec2& in_topLeft, const Vec2& in_bottomRight)
 			if ((x % 2) > 0)
 				pos.y += tileHeight / 2.0f;
 
-			tiles[i].Init(pos);
+			tiles[i].Init(pos,Location(x,y));
 			++i;
 		}
 	}
@@ -161,7 +177,7 @@ void Board::ProcessOffset(Keyboard & kbd)
 			if ((x % 2) > 0)
 				pos.y += tileHeight / 2.0f;
 
-			tiles[i].Init(pos);
+			tiles[i].Update(pos);
 			++i;
 		}
 	}
