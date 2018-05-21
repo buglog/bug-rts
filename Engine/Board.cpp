@@ -54,7 +54,7 @@ void Board::Tile::UpdateOffset(const Vec2 & in_topLeft)
 
 void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
 {
-	// DrawRect(gfx,clamp);
+	DrawRect(gfx,clamp);
 	DrawTile(gfx,clamp);
 }
 
@@ -152,7 +152,7 @@ void Board::Draw(Graphics & gfx)
 
 void Board::ProcessBoard(const Keyboard & kbd, const Mouse& mouse)
 {
-	// keyboard controls-- supposed to move map around but not working lmao
+	// keyboard controls-- to move map around
 	if (kbd.KeyIsPressed(VK_UP) || kbd.KeyIsPressed('W'))
 		offset.y -= speed;
 	if (kbd.KeyIsPressed(VK_DOWN) || kbd.KeyIsPressed('S'))
@@ -162,6 +162,7 @@ void Board::ProcessBoard(const Keyboard & kbd, const Mouse& mouse)
 	if (kbd.KeyIsPressed(VK_RIGHT) || kbd.KeyIsPressed('D'))
 		offset.x += speed;
 
+	ClampTileArray();
 	// tile placing code, yet again. except 60x per second
 	for (int y = 0; y < dimY; ++y)
 	{
@@ -184,4 +185,27 @@ void Board::ProcessBoard(const Keyboard & kbd, const Mouse& mouse)
 Board::Tile & Board::TileAt(Location & loc)
 {
 	return tiles[loc.y*dimX + loc.x];
+}
+
+void Board::ClampTileArray()
+{
+	if (offset.x > frame.GetRect().left)
+		offset.x = frame.GetRect().left;
+
+	if (GetTileArrayRect().right < frame.GetRect().right)
+		offset.x = frame.GetRect().right - GetTileArrayRect().width;
+
+	if(offset.y > frame.GetRect().top)
+		offset.y = frame.GetRect().top;
+
+	if (GetTileArrayRect().bottom < frame.GetRect().bottom)
+		offset.y = frame.GetRect().bottom - GetTileArrayRect().height;
+}
+
+RectF Board::GetTileArrayRect()
+{
+	Vec2 bottomRight;
+	bottomRight.x = offset.x + ((tileWidth / 2) * dimX);
+	bottomRight.y = offset.y + (tileHeight * dimY) + (tileHeight / 2);
+	return RectF(topLeft,bottomRight);
 }

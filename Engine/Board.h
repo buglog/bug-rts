@@ -83,6 +83,9 @@ public:
 	void ProcessBoard(const Keyboard& kbd, const Mouse& mouse);
 	Tile& TileAt(Location& loc);
 private:
+	void ClampTileArray();
+	RectF GetTileArrayRect();
+private:
 	Frame frame;
 	Vec2 offset;
 	Vec2 topLeft;
