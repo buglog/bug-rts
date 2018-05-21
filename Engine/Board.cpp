@@ -54,7 +54,7 @@ void Board::Tile::UpdateOffset(const Vec2 & in_topLeft)
 
 void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
 {
-	DrawRect(gfx,clamp);
+	//DrawRect(gfx,clamp);
 	DrawTile(gfx,clamp);
 }
 
@@ -162,7 +162,7 @@ void Board::ProcessBoard(const Keyboard & kbd, const Mouse& mouse)
 	if (kbd.KeyIsPressed(VK_RIGHT) || kbd.KeyIsPressed('D'))
 		offset.x += speed;
 
-	ClampTileArray();
+	ClampTileArray(50);
 	// tile placing code, yet again. except 60x per second
 	for (int y = 0; y < dimY; ++y)
 	{
@@ -187,19 +187,19 @@ Board::Tile & Board::TileAt(Location & loc)
 	return tiles[loc.y*dimX + loc.x];
 }
 
-void Board::ClampTileArray()
+void Board::ClampTileArray(const int buffer)
 {
-	if (offset.x > frame.GetRect().left)
-		offset.x = frame.GetRect().left;
+	if (offset.x > frame.GetRect().left + (tileWidth/4) + buffer)
+		offset.x = frame.GetRect().left + (tileWidth/4) + buffer;
 
-	if (GetTileArrayRect().right < frame.GetRect().right)
-		offset.x = frame.GetRect().right - GetTileArrayRect().width;
+	if (GetTileArrayRect().right < frame.GetRect().right			- (tileWidth/4) - buffer)
+		offset.x = frame.GetRect().right - GetTileArrayRect().width - (tileWidth/4) - buffer;
 
-	if(offset.y > frame.GetRect().top)
-		offset.y = frame.GetRect().top;
+	if (offset.y > frame.GetRect().top + buffer)
+		offset.y = frame.GetRect().top + buffer;
 
-	if (GetTileArrayRect().bottom < frame.GetRect().bottom)
-		offset.y = frame.GetRect().bottom - GetTileArrayRect().height;
+	if (GetTileArrayRect().bottom < frame.GetRect().bottom - buffer)
+		offset.y = frame.GetRect().bottom - GetTileArrayRect().height - buffer;
 }
 
 RectF Board::GetTileArrayRect()
@@ -207,5 +207,5 @@ RectF Board::GetTileArrayRect()
 	Vec2 bottomRight;
 	bottomRight.x = offset.x + ((tileWidth / 2) * dimX);
 	bottomRight.y = offset.y + (tileHeight * dimY) + (tileHeight / 2);
-	return RectF(topLeft,bottomRight);
+	return RectF(offset,bottomRight);
 }

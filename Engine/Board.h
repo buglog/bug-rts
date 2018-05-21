@@ -83,7 +83,7 @@ public:
 	void ProcessBoard(const Keyboard& kbd, const Mouse& mouse);
 	Tile& TileAt(Location& loc);
 private:
-	void ClampTileArray();
+	void ClampTileArray(const int buffer);
 	RectF GetTileArrayRect();
 private:
 	Frame frame;
@@ -93,7 +93,7 @@ private:
 	Location mouseLoc;
 	float speed = 10.0f;
 	static constexpr int dimX = 30;
-	static constexpr int dimY = 15;
+	static constexpr int dimY = 20;
 	// width and height refer to the diamond shape, not the rect. Rect is half the width, so right now it's A Square.
 	static constexpr float tileWidth = 100.0f;
 	static constexpr float tileHeight = 50.0f;
