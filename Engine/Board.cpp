@@ -42,7 +42,7 @@ void Board::Tile::Init(const Vec2 & in_topLeft, const Location& in_loc)
 	c_dead.SetB(30);
 }
 
-void Board::Tile::Update(const Vec2 & in_topLeft)
+void Board::Tile::UpdateOffset(const Vec2 & in_topLeft)
 {
 	topLeft = in_topLeft;
 	rect = RectF(Vec2(topLeft.x, topLeft.y), Vec2(topLeft.x + tileWidth / 2.0f, topLeft.y + tileHeight));
@@ -56,18 +56,6 @@ void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
 {
 	// DrawRect(gfx,clamp);
 	DrawTile(gfx,clamp);
-}
-
-void Board::Tile::ProcessMouse(const Mouse & mouse)
-{
-	if (MouseIsOver(mouse))
-	{
-		c_diamond = c_lit;
-	}
-	else
-	{
-		c_diamond = c_dead; 
-	}
 }
 
 bool Board::Tile::IsInFrame(Frame& frame)
@@ -108,16 +96,21 @@ void Board::Tile::DrawTile(Graphics & gfx,const RectF& clamp)
 	gfx.LineClamp(left,bottom, c_diamond,clamp);
 }
 
-bool Board::Tile::MouseIsOver(const Mouse & mouse)
+void Board::Tile::ProcessMouse(const Mouse & mouse)
 {
 	if (mouse.GetPosX() >= rect.left &&
-		mouse.GetPosX() <= rect.right &&
+		mouse.GetPosX() < rect.right &&
 		mouse.GetPosY() >= rect.top &&
-		mouse.GetPosY() <= rect.bottom)
+		mouse.GetPosY() < rect.bottom)
 	{
-		return true;
+		mouseIsOver = true;
+		c_diamond = c_lit;
 	}
-	return false;
+	else
+	{
+		mouseIsOver = false;
+		c_diamond = c_dead;
+	}
 }
 
 Board::Board(const Vec2& in_topLeft, const Vec2& in_bottomRight)
@@ -153,9 +146,11 @@ void Board::Draw(Graphics & gfx)
 	}
 	frame.Draw(gfx);
 	gfx.RectBorder(RectF(frame.GetRect().left + 1.0f, frame.GetRect().right - 1.0f, frame.GetRect().top + 1.0f, frame.GetRect().bottom - 1.0f ), Colors::Blue);
+
+	TileAt(mouseLoc).Draw(gfx,frame.GetRect());
 }
 
-void Board::ProcessOffset(Keyboard & kbd)
+void Board::ProcessBoard(const Keyboard & kbd, const Mouse& mouse)
 {
 	// keyboard controls-- supposed to move map around but not working lmao
 	if (kbd.KeyIsPressed(VK_UP) || kbd.KeyIsPressed('W'))
@@ -168,7 +163,6 @@ void Board::ProcessOffset(Keyboard & kbd)
 		offset.x += speed;
 
 	// tile placing code, yet again. except 60x per second
-	int i = 0;
 	for (int y = 0; y < dimY; ++y)
 	{
 		for (int x = 0; x < dimX; ++x)
@@ -177,16 +171,17 @@ void Board::ProcessOffset(Keyboard & kbd)
 			if ((x % 2) > 0)
 				pos.y += tileHeight / 2.0f;
 
-			tiles[i].Update(pos);
-			++i;
+			tiles[y * dimX + x].UpdateOffset(pos);
+			// process the mouse to change color, etc.
+			tiles[y * dimX + x].ProcessMouse(mouse);
+			// assign the board's mouseLoc to the location of the tile the mouse is over.
+			if (tiles[y * dimX + x].mouseIsOver)
+				mouseLoc = tiles[y * dimX + x].GetLoc();
 		}
 	}
 }
 
-void Board::ProcessTiles(const Mouse & mouse)
+Board::Tile & Board::TileAt(Location & loc)
 {
-	for (Tile& t : tiles)
-	{
-		t.ProcessMouse(mouse);
-	}
+	return tiles[loc.y*dimX + loc.x];
 }

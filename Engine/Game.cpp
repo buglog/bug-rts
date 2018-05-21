@@ -39,8 +39,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	brd.ProcessTiles(wnd.mouse);
-	brd.ProcessOffset(wnd.kbd);
+	brd.ProcessBoard(wnd.kbd,wnd.mouse);
 }
 
 void Game::ComposeFrame()

@@ -10,10 +10,13 @@ class Board
 public:
 	struct Location
 	{
+	public:
 		Location() = default;
 		Location(int in_x, int in_y)
+			:
+			x(in_x),
+			y(in_y)
 		{
-			Init(in_x, in_y);
 		}
 		void Init(int in_x, int in_y)
 		{
@@ -50,16 +53,17 @@ private:
 	public:
 		Tile() = default;
 		void Init(const Vec2& in_topLeft,const Location& in_loc);
-		void Update(const Vec2& in_topLeft);
+		void UpdateOffset(const Vec2& in_topLeft);
 		void Draw(Graphics& gfx, const RectF& clamp);
-		void ProcessMouse(const Mouse& mouse);
 		bool IsInFrame(Frame& frame);
+		void ProcessMouse(const Mouse& mouse);
 		Vec2 GetCenter();
 		Location GetLoc();
 	private:
 		void DrawRect(Graphics& gfx, const RectF& clamp);
 		void DrawTile(Graphics& gfx, const RectF& clamp);
-		bool MouseIsOver(const Mouse& mouse);
+	public:
+		bool mouseIsOver = false;
 	private:
 		Location loc;
 		RectF rect;
@@ -76,16 +80,17 @@ private:
 public:
 	Board(const Vec2& in_topLeft, const Vec2& in_bottomRight);
 	void Draw(Graphics& gfx);
-	void ProcessOffset(Keyboard& kbd);
-	void ProcessTiles(const Mouse& mouse);
+	void ProcessBoard(const Keyboard& kbd, const Mouse& mouse);
+	Tile& TileAt(Location& loc);
 private:
 	Frame frame;
 	Vec2 offset;
-	float speed = 10.0f;
 	Vec2 topLeft;
 	Vec2 bottomRight;
-	static constexpr int dimX = 5;
-	static constexpr int dimY = 5;
+	Location mouseLoc;
+	float speed = 10.0f;
+	static constexpr int dimX = 30;
+	static constexpr int dimY = 15;
 	// width and height refer to the diamond shape, not the rect. Rect is half the width, so right now it's A Square.
 	static constexpr float tileWidth = 100.0f;
 	static constexpr float tileHeight = 50.0f;
