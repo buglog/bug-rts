@@ -26,6 +26,7 @@
 #include "RectF.h"
 #include "Vec2.h"
 #include "Board.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -46,6 +47,8 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	FrameTimer ft;
+	float dt;
 	float x = 687.6f;
 	float y = 440.2f;
 	Board brd;
