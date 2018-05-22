@@ -51,6 +51,15 @@ private:
 	class Tile
 	{
 	public:
+		enum class Type
+		{
+			Dirt,
+			Grass,
+			Water,
+			Stone,
+			Concrete
+		};
+	public:
 		Tile() = default;
 		void Init(const Vec2& in_topLeft,const Location& in_loc);
 		void UpdateOffset(const Vec2& in_topLeft);
@@ -68,6 +77,8 @@ private:
 		Location loc;
 		RectF rect;
 		Vec2 topLeft;
+		Vec2 spritePos = Vec2( topLeft.x - (tileWidth/4),topLeft.y );
+		Vec2 spriteOffset;
 		// diamond color and others
 		Color c_diamond;
 		Color c_lit, c_dead;
@@ -82,6 +93,10 @@ public:
 	void Draw(Graphics& gfx);
 	void ProcessBoard(const Keyboard& kbd, const Mouse& mouse);
 	Tile& TileAt(Location& loc);
+	const Vec2& GetOffset() const
+	{
+		return offset;
+	}
 private:
 	void ClampTileArray(const int buffer);
 	RectF GetTileArrayRect();
