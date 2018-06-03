@@ -50,6 +50,7 @@ void Game::ComposeFrame()
 	gfx.Rectangle(rect, Colors::Yellow, Colors::Cyan);
 
 	brd.Draw(gfx);
+	bug.Draw(gfx,brd.frame.GetRect());
 }
 
 void Game::ClampToScreen(Vec2 & v)

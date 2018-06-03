@@ -27,6 +27,7 @@
 #include "Vec2.h"
 #include "Board.h"
 #include "FrameTimer.h"
+#include "Bug.h"
 
 class Game
 {
@@ -47,6 +48,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	Bug bug;
 	FrameTimer ft;
 	float dt;
 	float x = 687.6f;
