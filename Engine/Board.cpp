@@ -154,13 +154,13 @@ void Board::ProcessBoard(const Keyboard & kbd, const Mouse& mouse)
 {
 	// keyboard controls-- to move map around
 	if (kbd.KeyIsPressed(VK_UP) || kbd.KeyIsPressed('W'))
-		offset.y -= speed;
-	if (kbd.KeyIsPressed(VK_DOWN) || kbd.KeyIsPressed('S'))
 		offset.y += speed;
+	if (kbd.KeyIsPressed(VK_DOWN) || kbd.KeyIsPressed('S'))
+		offset.y -= speed;
 	if (kbd.KeyIsPressed(VK_LEFT) || kbd.KeyIsPressed('A'))
-		offset.x -= speed;
-	if (kbd.KeyIsPressed(VK_RIGHT) || kbd.KeyIsPressed('D'))
 		offset.x += speed;
+	if (kbd.KeyIsPressed(VK_RIGHT) || kbd.KeyIsPressed('D'))
+		offset.x -= speed;
 
 	ClampTileArray(50);
 	// tile placing code, yet again. except 60x per second

@@ -100,8 +100,9 @@ public:
 private:
 	void ClampTileArray(const int buffer);
 	RectF GetTileArrayRect();
-private:
+public:
 	Frame frame;
+private:
 	Vec2 offset;
 	Vec2 topLeft;
 	Vec2 bottomRight;
