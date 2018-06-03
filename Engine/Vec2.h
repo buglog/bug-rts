@@ -13,10 +13,10 @@ public:
 	Vec2& operator -= (const Vec2& rhs);
 	Vec2 operator * (const float rhs);
 	Vec2 operator / (const float rhs);
-	float getLengthSq() const;
-	float getLength() const;
-	Vec2& normalize();
-	Vec2 getNormalized();
+	float GetLengthSq() const;
+	float GetLength() const;
+	Vec2& Normalize();
+	Vec2 GetNormalized();
 public:
 	float x;
 	float y;

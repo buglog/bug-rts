@@ -91,7 +91,7 @@ private:
 public:
 	Board(const Vec2& in_topLeft, const Vec2& in_bottomRight);
 	void Draw(Graphics& gfx);
-	void ProcessBoard(const Keyboard& kbd, const Mouse& mouse);
+	void ProcessInput(const Keyboard& kbd, const Mouse& mouse);
 	Tile& TileAt(Location& loc);
 	const Vec2& GetOffset() const
 	{

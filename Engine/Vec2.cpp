@@ -44,22 +44,22 @@ Vec2 Vec2::operator/(const float rhs)
 	return Vec2(x / rhs, y / rhs);
 }
 
-float Vec2::getLengthSq() const
+float Vec2::GetLengthSq() const
 {
 	return x*x + y*y;
 }
 
-float Vec2::getLength() const
+float Vec2::GetLength() const
 {
-	return sqrtf(getLengthSq());
+	return sqrtf(GetLengthSq());
 }
 
-Vec2& Vec2::normalize()
+Vec2& Vec2::Normalize()
 {
-	return *this = *this * (1.0f / getLength());
+	return *this = *this * (1.0f / GetLength());
 }
 
-Vec2 Vec2::getNormalized() 
+Vec2 Vec2::GetNormalized() 
 {
-	return Vec2(*this * (1.0f / getLength()));
+	return Vec2(*this * (1.0f / GetLength()));
 }

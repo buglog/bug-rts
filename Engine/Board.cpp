@@ -150,7 +150,7 @@ void Board::Draw(Graphics & gfx)
 	TileAt(mouseLoc).Draw(gfx,frame.GetRect());
 }
 
-void Board::ProcessBoard(const Keyboard & kbd, const Mouse& mouse)
+void Board::ProcessInput(const Keyboard & kbd, const Mouse& mouse)
 {
 	// keyboard controls-- to move map around
 	if (kbd.KeyIsPressed(VK_UP) || kbd.KeyIsPressed('W'))

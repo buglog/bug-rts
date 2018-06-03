@@ -26,6 +26,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	brd( Vec2(0.0f,0.0f), Vec2((float)Graphics::ScreenWidth - 1.0f,(float)Graphics::ScreenHeight - 200.0f) ),
+	bug(brd.GetOffset()),
 	ft()
 {
 }
@@ -41,7 +42,9 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	dt = ft.Mark();
-	brd.ProcessBoard(wnd.kbd,wnd.mouse);
+	brd.ProcessInput(wnd.kbd,wnd.mouse);
+	bug.ProcessMouse(wnd.mouse);
+	bug.Update(brd.GetOffset());
 }
 
 void Game::ComposeFrame()
