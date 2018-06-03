@@ -6,14 +6,26 @@
 
 class Bug
 {
+	enum class State
+	{
+		OnGround,
+		OnStem,
+		InHole
+	};
 public:
-	void Update(float dt, const Mouse& mouse);
-	void Draw(Graphics& gfx);
+	Bug() = default;
+	Bug(const Vec2 offset);
+	void ProcessMouse(Mouse& mouse);
+	void Update(const Vec2 offset);
+	void Draw(Graphics& gfx,const RectF clamp) const;
 	RectF GetRect();
 public:
-	Vec2 pos;
+	float speed = 3.0f;
+	Vec2 offset = { 0.0f,0.0f };
+	Vec2 brdPos = {200.0f,100.0f};
+	Vec2 scrnPos = brdPos + offset;
 	Vec2 vel;
-	Vec2 target;
-	static constexpr int width = 30;
-	static constexpr int height = 20;
+	Vec2 target = brdPos;
+	static constexpr float width  = 40;
+	static constexpr float height = 30;
 };
