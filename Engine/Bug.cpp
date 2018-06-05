@@ -31,6 +31,11 @@ void Bug::Update(const Vec2& in_offset)
 
 void Bug::Draw(Graphics & gfx,const RectF clamp) const
 {
-	gfx.RectBorderClamp(RectF(scrnPos, width, height), Colors::Green, clamp);
+	gfx.RectBorderClamp(GetRect(), Colors::Green, clamp);
 	gfx.PutPixelClamp(scrnTarget, Colors::Red, clamp);
+}
+
+RectF Bug::GetRect() const
+{
+	return RectF::FromCenter(scrnPos,(width/2),(height/2));
 }

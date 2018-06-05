@@ -18,7 +18,7 @@ public:
 	void ProcessMouse(Mouse& mouse);
 	void Update(const Vec2& in_offset);
 	void Draw(Graphics& gfx,const RectF clamp) const;
-	RectF GetRect();
+	RectF GetRect() const;
 public:
 	float speed = 3.0f;
 	Vec2 offset;
