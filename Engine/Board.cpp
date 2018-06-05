@@ -30,6 +30,11 @@ void Board::Tile::Init(const Vec2 & in_topLeft, const Location& in_loc)
 	right  = Vec2( GetCenter().x + tileWidth / 2.0f, GetCenter().y );
 	top    = Vec2( GetCenter().x, GetCenter().y - tileHeight / 2.0f );
 	bottom = Vec2( GetCenter().x, GetCenter().y + tileHeight / 2.0f );
+	// sprite offset.
+	// This sets up the spritePos as 
+	spriteOffset.x -= Board::tileWidth / 4;
+	spriteOffset.y += Board::tileHeight;
+	spritePos = topLeft + spriteOffset;
 	// colors
 	c_rect.SetR(40);
 	c_rect.SetG(40);
@@ -50,12 +55,14 @@ void Board::Tile::UpdateOffset(const Vec2 & in_topLeft)
 	right = Vec2(GetCenter().x + tileWidth / 2.0f, GetCenter().y);
 	top = Vec2(GetCenter().x, GetCenter().y - tileHeight / 2.0f);
 	bottom = Vec2(GetCenter().x, GetCenter().y + tileHeight / 2.0f);
+	spritePos = topLeft + spriteOffset;
 }
 
 void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
 {
 	//DrawRect(gfx,clamp);
 	DrawTile(gfx,clamp);
+	gfx.PutPixelClamp(spritePos, Colors::Yellow,clamp);
 }
 
 bool Board::Tile::IsInFrame(Frame& frame)
