@@ -42,9 +42,9 @@ void Board::Tile::Init(const Vec2 & in_topLeft, const Location& in_loc)
 	c_lit.SetR(170);
 	c_lit.SetG(211);
 	c_lit.SetB(98);
-	c_dead.SetR(70);
-	c_dead.SetG(70);
-	c_dead.SetB(30);
+	c_dead.SetR(100);
+	c_dead.SetG(0);
+	c_dead.SetB(0);
 }
 
 void Board::Tile::UpdateOffset(const Vec2 & in_topLeft)
@@ -60,8 +60,8 @@ void Board::Tile::UpdateOffset(const Vec2 & in_topLeft)
 
 void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
 {
-	//DrawRect(gfx,clamp);
-	// DrawDiamond(gfx,clamp);
+	DrawRect(gfx,clamp);
+	DrawDiamond(gfx,clamp);
 	gfx.PutPixelClamp(spritePos, Colors::Yellow,clamp);
 }
 

@@ -11,7 +11,8 @@ class Cursor
 public:
 	enum class State
 	{
-		
+		Move,
+		Place,
 	};
 public:
 	Cursor(Board& in_brd);
