@@ -47,7 +47,12 @@ Vec2 RectF::GetCenter(const RectF& rect)
 	return Vec2(rect.left + (rect.width / 2.0f), rect.top + (rect.height / 2.0f));
 }
 
-bool RectF::Contains(const Vec2 & pos)
+bool RectF::Contains(const Vec2 & pos) const
 {
 	return (pos.x >= left && pos.x <= right && pos.y >= top && pos.y <= bottom);
+}
+
+bool RectF::Overlaps(const RectF & rect) const
+{
+	return (right >= rect.left && left <= rect.right && bottom >= rect.top && top <= rect.bottom);
 }

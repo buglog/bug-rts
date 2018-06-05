@@ -10,7 +10,8 @@ public:
 	RectF(const float& left, const float& right, const float& top, const float& bottom);
 	static RectF FromCenter(const Vec2& center, const float halfWidth, const float halfHeight);
 	static Vec2 GetCenter(const RectF& rect);
-	bool Contains(const Vec2& pos);
+	bool Contains(const Vec2& pos) const;
+	bool Overlaps(const RectF& rect) const;
 public:
 	Vec2 topLeft;
 	Vec2 bottomRight;

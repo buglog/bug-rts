@@ -74,6 +74,7 @@ private:
 	public:
 		bool mouseIsOver = false;
 	private:
+		// where is the loc?
 		Location loc;
 		RectF rect;
 		Vec2 topLeft;
