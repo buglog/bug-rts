@@ -1,8 +1,10 @@
 #include "Bug.h"
 
-Bug::Bug(const Vec2 in_offset)
+Bug::Bug(const Vec2& in_pos, const Vec2& in_offset)
+	:
+	brdPos(in_pos),
+	offset(in_offset)
 {
-	offset = in_offset;
 }
 
 void Bug::ProcessMouse(Mouse & mouse)

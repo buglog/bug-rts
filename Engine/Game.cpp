@@ -26,7 +26,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	brd( Vec2(0.0f,0.0f), Vec2((float)Graphics::ScreenWidth - 1.0f,(float)Graphics::ScreenHeight - 200.0f) ),
-	bug(brd.GetOffset()),
+	bug(Vec2({ 200.0f,100.0f }),brd.GetOffset()),
 	ft()
 {
 }

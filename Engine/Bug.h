@@ -14,7 +14,7 @@ class Bug
 	};
 public:
 	Bug() = default;
-	Bug(const Vec2 offset);
+	Bug(const Vec2& pos,const Vec2& offset);
 	void ProcessMouse(Mouse& mouse);
 	void Update(const Vec2& in_offset);
 	void Draw(Graphics& gfx,const RectF clamp) const;
@@ -23,7 +23,7 @@ public:
 	float speed = 3.0f;
 	Vec2 offset;
 	Vec2 brdPos = {200.0f,100.0f};
-	Vec2 scrnPos = (brdPos + offset);
+	Vec2 scrnPos;
 	Vec2 vel;
 	Vec2 target = brdPos;
 	Vec2 scrnTarget;
