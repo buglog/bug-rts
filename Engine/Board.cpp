@@ -61,7 +61,7 @@ void Board::Tile::UpdateOffset(const Vec2 & in_topLeft)
 void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
 {
 	//DrawRect(gfx,clamp);
-	DrawTile(gfx,clamp);
+	// DrawDiamond(gfx,clamp);
 	gfx.PutPixelClamp(spritePos, Colors::Yellow,clamp);
 }
 
@@ -91,7 +91,7 @@ void Board::Tile::DrawRect(Graphics & gfx, const RectF& clamp )
 	gfx.RectBorderClamp(rect, c_rect, clamp);
 }
 
-void Board::Tile::DrawTile(Graphics & gfx,const RectF& clamp)
+void Board::Tile::DrawDiamond(Graphics & gfx,const RectF& clamp)
 {
 	gfx.PutPixelClamp(left,  c_diamond,clamp);
 	gfx.PutPixelClamp(right, c_diamond,clamp);
@@ -154,7 +154,7 @@ void Board::Draw(Graphics & gfx)
 	frame.Draw(gfx);
 	gfx.RectBorder(RectF(frame.GetRect().left + 1.0f, frame.GetRect().right - 1.0f, frame.GetRect().top + 1.0f, frame.GetRect().bottom - 1.0f ), Colors::Blue);
 
-	TileAt(mouseLoc).Draw(gfx,frame.GetRect());
+	TileAt(mouseLoc).DrawDiamond(gfx,frame.GetRect());
 }
 
 void Board::ProcessInput(const Keyboard & kbd, const Mouse& mouse)

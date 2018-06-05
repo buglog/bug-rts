@@ -64,13 +64,12 @@ private:
 		void Init(const Vec2& in_topLeft,const Location& in_loc);
 		void UpdateOffset(const Vec2& in_topLeft);
 		void Draw(Graphics& gfx, const RectF& clamp);
+		void DrawDiamond(Graphics& gfx, const RectF& clamp);
+		void DrawRect(Graphics& gfx, const RectF& clamp);
 		bool IsInFrame(Frame& frame);
 		void ProcessMouse(const Mouse& mouse);
 		Vec2 GetCenter();
 		Location GetLoc();
-	private:
-		void DrawRect(Graphics& gfx, const RectF& clamp);
-		void DrawTile(Graphics& gfx, const RectF& clamp);
 	public:
 		bool mouseIsOver = false;
 	private:
