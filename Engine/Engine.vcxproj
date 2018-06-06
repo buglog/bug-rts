@@ -144,6 +144,7 @@
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="DXErr.h" />
     <ClInclude Include="Flower.h" />
+    <ClInclude Include="Frame.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="RectF.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +161,7 @@
     <ClCompile Include="Bug.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="DXErr.cpp" />
+    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
@@ -167,6 +170,7 @@
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="RectF.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
