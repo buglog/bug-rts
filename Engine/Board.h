@@ -52,12 +52,9 @@ private:
 	{
 	public:
 		enum class Type
-		{
+		{// make types simpler-- one thing per tile maybe
 			Dirt,
-			Grass,
-			Water,
-			Stone,
-			Concrete
+			Flower
 		};
 	public:
 		Tile() = default;

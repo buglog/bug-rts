@@ -60,7 +60,7 @@ void Board::Tile::UpdateOffset(const Vec2 & in_topLeft)
 
 void Board::Tile::Draw(Graphics & gfx,const RectF& clamp)
 {
-	DrawRect(gfx,clamp);
+	// DrawRect(gfx,clamp);
 	DrawDiamond(gfx,clamp);
 	gfx.PutPixelClamp(spritePos, Colors::Yellow,clamp);
 }
